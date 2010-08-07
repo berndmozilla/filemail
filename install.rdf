@@ -4,7 +4,7 @@
     <em:id>filemail@bernd.brot</em:id>
     <em:type>2</em:type>
     <em:name>filemail</em:name>
-    <em:version>0.1</em:version>
+    <em:version>0.2</em:version>
     <em:creator>Bernd Mielke</em:creator>
     <em:contributor></em:contributor>
     <em:description>move mails to the same folderd where  previously mails have been moved for this author</em:description>

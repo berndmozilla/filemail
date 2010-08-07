@@ -1,4 +1,4 @@
-var newMailListener = {
+var filemail_newMailListener = {
     msgsMoveCopyCompleted: function(aMove, 
                                     aSrcMsgs,
                                     aDestFolder,
@@ -14,10 +14,10 @@ var newMailListener = {
         for each (let msgHdr in fixIterator(aSrcMsgs.enumerate(),
                                           Components.interfaces.nsIMsgDBHdr)) {
           let mailfrom = msgHdr.author;
-          if (tbirdsqlite.dbIsKnownAuthor(mailfrom)) {
+          if (filemail_sqlite.dbIsKnownAuthor(mailfrom)) {
             mailfrom = gFolderDisplay.selectedMessage.recipients;
           }                                
-          tbirdsqlite.dbSetPath(mailfrom, aDestFolder.URI);
+          filemail_sqlite.dbSetPath(mailfrom, aDestFolder.URI);
         }
       } 
     }
@@ -28,11 +28,11 @@ var filemail = {
     // initialization code
     this.initialized = true;
     this.strings = document.getElementById("filemail-strings");
-    tbirdsqlite.onLoad();
+    filemail_sqlite.onLoad();
     var notificationService =
 	 Components.classes["@mozilla.org/messenger/msgnotificationservice;1"]
 	 .getService(Components.interfaces.nsIMsgFolderNotificationService);
-     notificationService.addListener(newMailListener, notificationService.msgsMoveCopyCompleted); 
+     notificationService.addListener(filemail_newMailListener, notificationService.msgsMoveCopyCompleted); 
   },
   notify: function(title, text) {
     try {
@@ -46,10 +46,10 @@ var filemail = {
   moveMail: function() {
     if (gFolderDisplay.selectedCount == 1) {
       let mailfrom = gFolderDisplay.selectedMessage.author;
-      if (tbirdsqlite.dbIsKnownAuthor(mailfrom)) {
+      if (filemail_sqlite.dbIsKnownAuthor(mailfrom)) {
         mailfrom = gFolderDisplay.selectedMessage.recipients;
       }
-      let path = tbirdsqlite.dbGetPath(mailfrom);
+      let path = filemail_sqlite.dbGetPath(mailfrom);
       if (path) {
         MsgMoveMessage(GetMsgFolderFromUri(path, false));
         filemail.notify(mailfrom + " " + this.strings.getString("movedto"), path); 
@@ -65,7 +65,7 @@ var filemail = {
   invertSender: function() {
     if (gFolderDisplay.selectedCount == 1) {
       let mailfrom = gFolderDisplay.selectedMessage.author;
-      tbirdsqlite.dbSaveKnownAuthor(mailfrom);
+      filemail_sqlite.dbSaveKnownAuthor(mailfrom);
     }
   }
 };

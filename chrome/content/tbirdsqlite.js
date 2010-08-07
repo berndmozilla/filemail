@@ -1,7 +1,7 @@
 const Cc = Components.classes;
 const Ci = Components.interfaces;
 
-var tbirdsqlite = {
+var filemail_sqlite = {
 
   onLoad: function() {
     // initialization code
