@@ -8,11 +8,22 @@
   <groupbox align="center" orient="horizontal">
     <vbox>
       <text value="FileMail" style="font-weight: bold; font-size: x-large;"/>
-      <text value="&version; 0.2"/>
+      <text value="&version; 0.3"/>
       <separator class="thin"/>
       <text value="&createdBy;" style="font-weight: bold;"/>
       <text value="Bernd Mielke"/>
       <separator class="thin"/>
+      <text value="&direct;" style="font-weight: bold; font-size: large;"/>
+      <separator class="thin"/>
+      <description width="400">
+        &hitkey;
+      </description>
+      <separator class="thin"/>
+      <text value="&inverted;" style="font-weight: bold; font-size: large;"/>
+      <separator class="thin"/>
+      <description width="400">
+        &hitshiftkey;
+      </description>
     </vbox>
   </groupbox>
 </dialog>

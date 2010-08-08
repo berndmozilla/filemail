@@ -17,7 +17,9 @@ var filemail_newMailListener = {
           if (filemail_sqlite.dbIsKnownAuthor(mailfrom)) {
             mailfrom = gFolderDisplay.selectedMessage.recipients;
           }                                
-          filemail_sqlite.dbSetPath(mailfrom, aDestFolder.URI);
+          if (filemail_sqlite.dbSetPath(mailfrom, aDestFolder.URI)) {
+            filemail.notify(filemail.strings.getString("update") + " "+ mailfrom , aDestFolder.URI);
+          }
         }
       } 
     }

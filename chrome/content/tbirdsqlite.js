@@ -79,6 +79,7 @@ var filemail_sqlite = {
     return uri;
   },
   dbSetPath: function(sender, uri) {
+    var update = false;
     if (!this.dbGetPath(sender)) {
       var statement = this.dbConnection.createStatement("INSERT INTO senderpath VALUES (:mail, :uri)");
       statement.params.mail = sender;
@@ -93,10 +94,10 @@ var filemail_sqlite = {
       } 
     }
     else if (!this.dbCheckPath(sender, uri)) {
-      alert("udpate");
       var statement = this.dbConnection.createStatement("UPDATE senderpath SET uri = :uri WHERE mailfrom = :mail");
       statement.params.mail = sender;
       statement.params.uri = uri; 
+      update = true;
       try {  
         while (statement.step()) {  
           // Use the results...  
@@ -105,7 +106,8 @@ var filemail_sqlite = {
       finally {  
         statement.reset();  
       }  
-    }  
+    }
+    return update;  
   },
   dbIsKnownAuthor: function (sender) {
     var statement = this.dbConnection.createStatement("SELECT * FROM knownAuthor WHERE mailfrom = :mail");  
