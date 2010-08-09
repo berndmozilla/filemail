@@ -13,9 +13,9 @@ var filemail_newMailListener = {
       if (!(aDestFolder.flags & ignoreFlags)) { // isSpecialFlags does some strange hacks
         for each (let msgHdr in fixIterator(aSrcMsgs.enumerate(),
                                           Components.interfaces.nsIMsgDBHdr)) {
-          let mailfrom = msgHdr.author;
+          let mailfrom = filemail.address_extract(msgHdr.author);
           if (filemail_sqlite.dbIsKnownAuthor(mailfrom)) {
-            mailfrom = gFolderDisplay.selectedMessage.recipients;
+            mailfrom = filemail.address_extract(gFolderDisplay.selectedMessage.recipients);
           }                                
           if (filemail_sqlite.dbSetPath(mailfrom, aDestFolder.URI)) {
             filemail.notify(filemail.strings.getString("update") + " "+ mailfrom , aDestFolder.URI);
@@ -45,11 +45,24 @@ var filemail = {
       // prevents runtime error on platforms that don't implement nsIAlertsService
     }
   },
+  address_extract: function(addresses_toParse) {    
+    var addresses_only = {};
+    var names_only = {};
+    var addresses_and_names = {};
+    var headerParser = Components.classes["@mozilla.org/messenger/headerparser;1"].
+           getService(Components.interfaces.nsIMsgHeaderParser);
+    let numAddress = headerParser.parseHeadersWithArray(addresses_toParse,
+            addresses_only, names_only, addresses_and_names);
+    if (numAddress > 0) {
+      return addresses_only.value[0];    
+    }
+    return addresses_toParse;
+  }, 
   moveMail: function() {
     if (gFolderDisplay.selectedCount == 1) {
-      let mailfrom = gFolderDisplay.selectedMessage.author;
+      let mailfrom = this.address_extract(gFolderDisplay.selectedMessage.author);
       if (filemail_sqlite.dbIsKnownAuthor(mailfrom)) {
-        mailfrom = gFolderDisplay.selectedMessage.recipients;
+        mailfrom = this.address_extract(gFolderDisplay.selectedMessage.recipients);
       }
       let path = filemail_sqlite.dbGetPath(mailfrom);
       if (path) {
@@ -66,7 +79,7 @@ var filemail = {
   },
   invertSender: function() {
     if (gFolderDisplay.selectedCount == 1) {
-      let mailfrom = gFolderDisplay.selectedMessage.author;
+      let mailfrom = this.address_extract(gFolderDisplay.selectedMessage.author);
       filemail_sqlite.dbSaveKnownAuthor(mailfrom);
     }
   }
