@@ -2,8 +2,8 @@
 <?xml-stylesheet href="chrome://filemail/skin/overlay.css" type="text/css"?>
 <!DOCTYPE overlay SYSTEM "chrome://filemail/locale/overlay.dtd">
 <overlay id="filemail-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  <script type="application/x-javascript" src="tbirdsqlite.js;version=1.7"/>
-  <script type="application/x-javascript" src="overlay.js;version=1.7"/>
+  <script type="application/x-javascript" src="chrome://filemail/content/tbirdsqlite.js"/>
+  <script type="application/x-javascript" src="chrome://filemail/content/overlay.js"/>
   
   <stringbundleset id="stringbundleset">
     <stringbundle id="filemail-strings" src="chrome://filemail/locale/overlay.properties"/>
