@@ -1,5 +1,5 @@
-const Cc = Components.classes;
-const Ci = Components.interfaces;
+const fileMailCc = Components.classes;
+const fileMailCi = Components.interfaces;
 
 var filemail_sqlite = {
 
@@ -20,14 +20,14 @@ var filemail_sqlite = {
   },
 
   dbInit: function() {
-    var dirService = Cc["@mozilla.org/file/directory_service;1"].
-      getService(Ci.nsIProperties);
+    var dirService = fileMailCc["@mozilla.org/file/directory_service;1"].
+      getService(fileMailCi.nsIProperties);
 
-    var dbFile = dirService.get("ProfD", Ci.nsIFile);
+    var dbFile = dirService.get("ProfD", fileMailCi.nsIFile);
     dbFile.append("filemail.sqlite");
 
-    var dbService = Cc["@mozilla.org/storage/service;1"].
-      getService(Ci.mozIStorageService);
+    var dbService = fileMailCc["@mozilla.org/storage/service;1"].
+      getService(fileMailCi.mozIStorageService);
 
     var dbConnection;
 
