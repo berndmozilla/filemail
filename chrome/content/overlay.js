@@ -1,3 +1,5 @@
+
+
 var filemail_newMailListener = {
     msgsMoveCopyCompleted: function(aMove, 
                                     aSrcMsgs,
@@ -59,6 +61,7 @@ var filemail = {
     return addresses_toParse;
   }, 
   moveMail: function() {
+    Components.utils.import("resource:///modules/MailUtils.js");
     if (gFolderDisplay.selectedCount == 1) {
       let mailfrom = this.address_extract(gFolderDisplay.selectedMessage.author);
       if (filemail_sqlite.dbIsKnownAuthor(mailfrom)) {
@@ -66,7 +69,7 @@ var filemail = {
       }
       let path = filemail_sqlite.dbGetPath(mailfrom);
       if (path) {
-        MsgMoveMessage(GetMsgFolderFromUri(path, false));
+        MsgMoveMessage(MailUtils.getFolderForURI(path, false));
         filemail.notify(mailfrom + " " + this.strings.getString("movedto"), path); 
       }
       else {
