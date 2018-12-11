@@ -10,11 +10,9 @@ var filemail_newMailListener = {
       var ignoreFlags = nsMsgFolderFlags.Trash | nsMsgFolderFlags.SentMail |
                         nsMsgFolderFlags.Drafts | nsMsgFolderFlags.Queue |
                         nsMsgFolderFlags.Templates | nsMsgFolderFlags.Junk |
-                         nsMsgFolderFlags.Inbox;
-                         
+                         nsMsgFolderFlags.Inbox;               
       if (!(aDestFolder.flags & ignoreFlags)) { // isSpecialFlags does some strange hacks
-        for each (let msgHdr in fixIterator(aSrcMsgs.enumerate(),
-                                          Components.interfaces.nsIMsgDBHdr)) {
+        for (let msgHdr of fixIterator(aSrcMsgs, Components.interfaces.nsIMsgDBHdr)) {
           let mailfrom = filemail.address_extract(msgHdr.author);
           if (filemail_sqlite.dbIsKnownAuthor(mailfrom)) {
             mailfrom = filemail.address_extract(gFolderDisplay.selectedMessage.recipients);
