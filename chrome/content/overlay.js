@@ -59,7 +59,7 @@ var filemail = {
     return addresses_toParse;
   }, 
   moveMail: function() {
-    Components.utils.import("resource:///modules/MailUtils.js");
+    ChromeUtils.import("resource:///modules/MailUtils.jsm");
     if (gFolderDisplay.selectedCount == 1) {
       let mailfrom = this.address_extract(gFolderDisplay.selectedMessage.author);
       if (filemail_sqlite.dbIsKnownAuthor(mailfrom)) {
@@ -67,7 +67,7 @@ var filemail = {
       }
       let path = filemail_sqlite.dbGetPath(mailfrom);
       if (path) {
-        MsgMoveMessage(MailUtils.getFolderForURI(path, false));
+        MsgMoveMessage(MailUtils.getExistingFolder(path, false));
         filemail.notify(mailfrom + " " + this.strings.getString("movedto"), path); 
       }
       else {
