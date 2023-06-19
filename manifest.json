@@ -1,20 +1,37 @@
 {
   "manifest_version": 2,
+  "name": "filemail",
+  "description": "move mails to the same folder where  previously mails have been moved for this author",
+  "version": "0.7",
+  "author": "Bernd Mielke",
   "applications": {
     "gecko": {
       "id": "filemail@bernd.brot",
-      "strict_min_version": "68.0"
+      "strict_min_version": "102.0"
     }
   },
-  "name": "filemail",
-  "description": "move mails to the same folder where  previously mails have been moved for this author",
-  "version": "0.6.5",
-  "author": "Bernd Mielke",
-  "legacy": {
-    "type": "xul",
-    "options": {
-      "page": "chrome://filemail/content/about.xul",
-      "open_in_tab": true
-    }
-  }
+  "commands": {
+       "movemail": {
+        "suggested_key": {
+        "default": "Ctrl+Q"
+        },
+        "description": "Once you have moved one mail to a specific folder the addon keeps track of the mail address of the mail author and the folder that mails get moved into. The next time you would like to move a mail to the same folder instead of  managing the the context menus and then selecting the final folder, you just hit CTRL + 'q' and its gone to the same folder."
+      },
+      "invertSender": {
+        "suggested_key": {
+        "default": "Ctrl+Shift+Q"
+        },
+        "description": "If you have users (like you) where you want to use the target email address instead of the sender email address  for selecting the folder, select once a  message from this email author and hit CTRL +  shift + 'q', then for all emails from this sender the target email will used for selecting the target folder instead of the sender email."
+      }
+    },
+    "background": {
+       "scripts": ["background-script.js"]
+    },
+  "permissions": [
+      "messagesRead",
+      "messagesMove",
+      "accountsRead",
+      "notifications",
+      "storage"
+  ]
 }
