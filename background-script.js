@@ -13,11 +13,12 @@ browser.commands.onCommand.addListener(async function(command) {
     browser.messageDisplay.getDisplayedMessage(tabId).then((message) => {
       if ((storage.knownAuthors.length > 0) && 
         (storage.knownAuthors.find((str) => str == message.author))) {
-        let author = message.recipients[0];
+        author = message.recipients[0];
       }
       else {
         author = message.author;
       }
+      console.log(author);
       if ((storage.myAuthors.length > 0) && 
           ((index = storage.myAuthors.findIndex((str) => str == author))) &&
           (index > -1)) {
@@ -37,6 +38,12 @@ browser.commands.onCommand.addListener(async function(command) {
         console.log("Move to: " + path);     
       }
       else {
+        let filemailNotification = "filemail-notification";
+        browser.notifications.create(filemailNotification, {
+                type: "basic",
+                title: "unknown author " + author,
+                message: "move one message first by hand",
+              });
         console.log("unknown author: " + author); 
       }
     
@@ -87,7 +94,7 @@ function isSpecialFolder(type)
 messenger.messages.onMoved.addListener(async (originalMessages, movedMessages) => {
   if (movedMessages.messages.length == 1) {
     if(!isSpecialFolder(movedMessages.messages[0].folder.type)) {
-      const author = movedMessages.messages[0].author;
+      author = movedMessages.messages[0].author;
       let storage = await messenger.storage.local.get({
         knownAuthors : [],
         myAuthors: [],
@@ -95,10 +102,14 @@ messenger.messages.onMoved.addListener(async (originalMessages, movedMessages) =
         folders:   []});
       if ((storage.knownAuthors.length > 0) && 
           (storage.knownAuthors.find((str) => str == author))) {
-        let author = movedMessages.messages[0].recipients[0];
+         console.log(author);
+         console.log(movedMessages.messages[0].recipients[0])
+         author = movedMessages.messages[0].recipients[0];
+         console.log("overwritten by: " + author);
       }
-      let path =  movedMessages.messages[0].folder.path;
-      let id =  movedMessages.messages[0].folder.accountId;
+      
+      path =  movedMessages.messages[0].folder.path;
+      id =  movedMessages.messages[0].folder.accountId;
       if ((storage.myAuthors.length > 0) && 
           ((index = storage.myAuthors.findIndex((str) => str == author))) &&
           (index > -1)) {

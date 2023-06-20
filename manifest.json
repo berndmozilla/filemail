@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "filemail",
   "description": "move mails to the same folder where  previously mails have been moved for this author",
-  "version": "0.7",
+  "version": "0.7.1",
   "author": "Bernd Mielke",
   "applications": {
     "gecko": {
