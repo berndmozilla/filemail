@@ -19,9 +19,8 @@ browser.commands.onCommand.addListener(async function(command) {
         author = message.author;
       }
       console.log(author);
-      if ((storage.myAuthors.length > 0) && 
-          ((index = storage.myAuthors.findIndex((str) => str == author))) &&
-          (index > -1)) {
+      if ((storage.myAuthors.length > 0) &&
+          ((index = storage.myAuthors.findIndex((str) => str == author)) > -1))  {
         path = storage.folders[index];
         id = storage.accounts[index];
         folder = message.folder;
@@ -43,7 +42,7 @@ browser.commands.onCommand.addListener(async function(command) {
                 type: "basic",
                 title: "unknown author " + author,
                 message: "move one message first by hand",
-              });
+              });     
         console.log("unknown author: " + author); 
       }
     
@@ -110,9 +109,8 @@ messenger.messages.onMoved.addListener(async (originalMessages, movedMessages) =
       
       path =  movedMessages.messages[0].folder.path;
       id =  movedMessages.messages[0].folder.accountId;
-      if ((storage.myAuthors.length > 0) && 
-          ((index = storage.myAuthors.findIndex((str) => str == author))) &&
-          (index > -1)) {
+      if ((storage.myAuthors.length > 0) &&
+          ((index = storage.myAuthors.findIndex((str) => str == author)) > -1)) {
         if ((storage.accounts[index] != id) || 
             (storage.folders[index] != path)) {
           let filemailNotification = "filemail-notification";
